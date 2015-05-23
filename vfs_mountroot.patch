@@ -1,0 +1,51 @@
+Index: /usr/src/sys/kern/vfs_mountroot.c
+===================================================================
+--- /usr/src/sys/kern/vfs_mountroot.c   (revision 271156)
++++ /usr/src/sys/kern/vfs_mountroot.c   (working copy)
+@@ -930,12 +930,15 @@
+ void
+ vfs_mountroot(void)
+ {
+-       struct mount *mp;
++       struct mount *mp, *mp_prev;
+        struct sbuf *sb;
+        struct thread *td;
+        time_t timebase;
+        int error;
++       char *latest_mount;
+
++       latest_mount="";
++
+        td = curthread;
+
+        vfs_mountroot_wait();
+@@ -973,6 +976,29 @@
+                        timebase = mp->mnt_time;
+                mp = TAILQ_NEXT(mp, mnt_list);
+        }
++
++       /*
++        * Change mnt_stat.fmntonname to apropriate value
++        * skipping /dev, current root, and previous root.
++        */
++       mp = TAILQ_FIRST(&mountlist);
++       if ((mp = TAILQ_NEXT(mp, mnt_list)) != NULL) {
++               mp_prev = mp;
++               if ((mp = TAILQ_NEXT(mp, mnt_list)) != NULL)
++                       while (mp != NULL) {
++                               if (mp->mnt_time != 0){
++                                   latest_mount="";
++                                   strlcpy(latest_mount,
++                                       mp_prev->mnt_stat.f_mntonname, MNAMELEN);
++                                   strlcat(latest_mount,
++                                       mp->mnt_stat.f_mntonname, MNAMELEN);
++                                   strlcpy(mp->mnt_stat.f_mntonname,
++                                       latest_mount, MNAMELEN);
++                               }
++                               mp_prev = mp;
++                               mp = TAILQ_NEXT (mp, mnt_list);
++                       }
++       }
+        mtx_unlock(&mountlist_mtx);
+        inittodr(timebase);
+

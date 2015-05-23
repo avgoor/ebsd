@@ -1,0 +1,247 @@
+/boot/kernel/kernel text=0x430f50 data=0x8f9e70+0x82844 \
+
+Hit [Enter] to boot immediately, or any other key for command prompt.
+Booting [/boot/kernel/kernel]...
+Copyright (c) 1992-2014 The FreeBSD Project.
+Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994
+        The Regents of the University of California. All rights reserved.
+FreeBSD is a registered trademark of The FreeBSD Foundation.
+FreeBSD 10.0-STABLE #6 941a79b(stable/10): Mon May 19 23:33:02 CEST 2014
+    root@fbsd-10.i386:/usr/obj/usr/src/sys/E_BSD i386
+FreeBSD clang version 3.4 (tags/RELEASE_34/final 197956) 20140216
+CPU: Intel(R) Core(TM) i7-3630QM CPU @ 2.40GHz (2394.57-MHz 686-class CPU)
+  Origin = "GenuineIntel"  Id = 0x306a9  Family = 0x6  Model = 0x3a  Stepping = 9
+  Features=0xfa3fbff<FPU,VME,DE,PSE,TSC,MSR,PAE,MCE,CX8,APIC,SEP,MTRR,PGE,MCA,CMOV,PAT,PSE36,DTS,MMX,FXSR,SSE,SSE2,SS>
+  Features2=0xf6ba2203<SSE3,PCLMULQDQ,SSSE3,CX16,PCID,SSE4.1,SSE4.2,x2APIC,POPCNT,AESNI,XSAVE,AVX,F16C,RDRAND,HV>
+  AMD Features=0x28100000<NX,RDTSCP,LM>
+  AMD Features2=0x1<LAHF>
+  TSC: P-state invariant
+real memory  = 67108864 (64 MB)
+avail memory = 46862336 (44 MB)
+Event timer "LAPIC" quality 600
+ACPI APIC Table: <PTLTD          APIC  >
+random device not loaded; using insecure entropy
+MADT: Forcing active-low polarity and level trigger for SCI
+ioapic0 <Version 1.1> irqs 0-23 on motherboard
+random: <Software, Yarrow> initialized
+acpi0: <INTEL 440BX> on motherboard
+acpi0: Power Button (fixed)
+Timecounter "HPET" frequency 14318180 Hz quality 950
+cpu0: <ACPI CPU> on acpi0
+attimer0: <AT timer> port 0x40-0x43 irq 0 on acpi0
+Timecounter "i8254" frequency 1193182 Hz quality 0
+Event timer "i8254" frequency 1193182 Hz quality 100
+atrtc0: <AT realtime clock> port 0x70-0x71 irq 8 on acpi0
+Event timer "RTC" frequency 32768 Hz quality 0
+Timecounter "ACPI-fast" frequency 3579545 Hz quality 900
+acpi_timer0: <24-bit timer at 3.579545MHz> port 0x1008-0x100b on acpi0
+pcib0: <ACPI Host-PCI bridge> port 0xcf8-0xcff on acpi0
+pci0: <ACPI PCI bus> on pcib0
+pcib1: <ACPI PCI-PCI bridge> at device 1.0 on pci0
+pci1: <ACPI PCI bus> on pcib1
+isab0: <PCI-ISA bridge> at device 7.0 on pci0
+isa0: <ISA bus> on isab0
+pci0: <mass storage, ATA> at device 7.1 (no driver attached)
+pci0: <bridge> at device 7.3 (no driver attached)
+vgapci0: <VGA-compatible display> port 0x1070-0x107f mem 0xe8000000-0xefffffff,0xfe000000-0xfe7fffff irq 16 at device 15.0 on pci0
+vgapci0: Boot video device
+pci0: <mass storage, SCSI> at device 16.0 (no driver attached)
+pcib2: <ACPI PCI-PCI bridge> at device 17.0 on pci0
+pci2: <ACPI PCI bus> on pcib2
+pci2: <serial bus, USB> at device 0.0 (no driver attached)
+em0: <Intel(R) PRO/1000 Legacy Network Connection 1.0.6> port 0x2000-0x203f mem 0xfd5c0000-0xfd5dffff,0xfdff0000-0xfdffffff irq 19 at device 1.0 on pci2
+em0: Ethernet address: 00:0c:29:81:85:6e
+pci2: <serial bus, USB> at device 2.0 (no driver attached)
+ahci0: <AHCI SATA controller> mem 0xfd5ee000-0xfd5eefff irq 18 at device 4.0 on pci2
+ahci0: AHCI v1.30 with 30 6Gbps ports, Port Multiplier not supported
+ahcich0: <AHCI channel> at channel 0 on ahci0
+ahcich1: <AHCI channel> at channel 1 on ahci0
+ahcich2: <AHCI channel> at channel 2 on ahci0
+ahcich3: <AHCI channel> at channel 3 on ahci0
+ahcich4: <AHCI channel> at channel 4 on ahci0
+ahcich5: <AHCI channel> at channel 5 on ahci0
+ahcich6: <AHCI channel> at channel 6 on ahci0
+ahcich7: <AHCI channel> at channel 7 on ahci0
+ahcich8: <AHCI channel> at channel 8 on ahci0
+ahcich9: <AHCI channel> at channel 9 on ahci0
+ahcich10: <AHCI channel> at channel 10 on ahci0
+ahcich11: <AHCI channel> at channel 11 on ahci0
+ahcich12: <AHCI channel> at channel 12 on ahci0
+ahcich13: <AHCI channel> at channel 13 on ahci0
+ahcich14: <AHCI channel> at channel 14 on ahci0
+ahcich15: <AHCI channel> at channel 15 on ahci0
+ahcich16: <AHCI channel> at channel 16 on ahci0
+ahcich17: <AHCI channel> at channel 17 on ahci0
+ahcich18: <AHCI channel> at channel 18 on ahci0
+ahcich19: <AHCI channel> at channel 19 on ahci0
+ahcich20: <AHCI channel> at channel 20 on ahci0
+ahcich21: <AHCI channel> at channel 21 on ahci0
+ahcich22: <AHCI channel> at channel 22 on ahci0
+ahcich23: <AHCI channel> at channel 23 on ahci0
+ahcich24: <AHCI channel> at channel 24 on ahci0
+ahcich25: <AHCI channel> at channel 25 on ahci0
+ahcich26: <AHCI channel> at channel 26 on ahci0
+ahcich27: <AHCI channel> at channel 27 on ahci0
+ahcich28: <AHCI channel> at channel 28 on ahci0
+ahcich29: <AHCI channel> at channel 29 on ahci0
+pcib3: <ACPI PCI-PCI bridge> at device 21.0 on pci0
+pci3: <ACPI PCI bus> on pcib3
+pcib4: <ACPI PCI-PCI bridge> at device 21.1 on pci0
+pci4: <ACPI PCI bus> on pcib4
+pcib5: <ACPI PCI-PCI bridge> at device 21.2 on pci0
+pci5: <ACPI PCI bus> on pcib5
+pcib6: <ACPI PCI-PCI bridge> at device 21.3 on pci0
+pci6: <ACPI PCI bus> on pcib6
+pcib7: <ACPI PCI-PCI bridge> at device 21.4 on pci0
+pci7: <ACPI PCI bus> on pcib7
+pcib8: <ACPI PCI-PCI bridge> at device 21.5 on pci0
+pci8: <ACPI PCI bus> on pcib8
+pcib9: <ACPI PCI-PCI bridge> at device 21.6 on pci0
+pci9: <ACPI PCI bus> on pcib9
+pcib10: <ACPI PCI-PCI bridge> at device 21.7 on pci0
+pci10: <ACPI PCI bus> on pcib10
+pcib11: <ACPI PCI-PCI bridge> at device 22.0 on pci0
+pci11: <ACPI PCI bus> on pcib11
+pcib12: <ACPI PCI-PCI bridge> at device 22.1 on pci0
+pci12: <ACPI PCI bus> on pcib12
+pcib13: <ACPI PCI-PCI bridge> at device 22.2 on pci0
+pci13: <ACPI PCI bus> on pcib13
+pcib14: <ACPI PCI-PCI bridge> at device 22.3 on pci0
+pci14: <ACPI PCI bus> on pcib14
+pcib15: <ACPI PCI-PCI bridge> at device 22.4 on pci0
+pci15: <ACPI PCI bus> on pcib15
+pcib16: <ACPI PCI-PCI bridge> at device 22.5 on pci0
+pci16: <ACPI PCI bus> on pcib16
+pcib17: <ACPI PCI-PCI bridge> at device 22.6 on pci0
+pci17: <ACPI PCI bus> on pcib17
+pcib18: <ACPI PCI-PCI bridge> at device 22.7 on pci0
+pci18: <ACPI PCI bus> on pcib18
+pcib19: <ACPI PCI-PCI bridge> at device 23.0 on pci0
+pci19: <ACPI PCI bus> on pcib19
+pcib20: <ACPI PCI-PCI bridge> at device 23.1 on pci0
+pci20: <ACPI PCI bus> on pcib20
+pcib21: <ACPI PCI-PCI bridge> at device 23.2 on pci0
+pci21: <ACPI PCI bus> on pcib21
+pcib22: <ACPI PCI-PCI bridge> at device 23.3 on pci0
+pci22: <ACPI PCI bus> on pcib22
+pcib23: <ACPI PCI-PCI bridge> at device 23.4 on pci0
+pci23: <ACPI PCI bus> on pcib23
+pcib24: <ACPI PCI-PCI bridge> at device 23.5 on pci0
+pci24: <ACPI PCI bus> on pcib24
+pcib25: <ACPI PCI-PCI bridge> at device 23.6 on pci0
+pci25: <ACPI PCI bus> on pcib25
+pcib26: <ACPI PCI-PCI bridge> at device 23.7 on pci0
+pci26: <ACPI PCI bus> on pcib26
+pcib27: <ACPI PCI-PCI bridge> at device 24.0 on pci0
+pci27: <ACPI PCI bus> on pcib27
+pcib28: <ACPI PCI-PCI bridge> at device 24.1 on pci0
+pci28: <ACPI PCI bus> on pcib28
+pcib29: <ACPI PCI-PCI bridge> at device 24.2 on pci0
+pci29: <ACPI PCI bus> on pcib29
+pcib30: <ACPI PCI-PCI bridge> at device 24.3 on pci0
+pci30: <ACPI PCI bus> on pcib30
+pcib31: <ACPI PCI-PCI bridge> at device 24.4 on pci0
+pci31: <ACPI PCI bus> on pcib31
+pcib32: <ACPI PCI-PCI bridge> at device 24.5 on pci0
+pci32: <ACPI PCI bus> on pcib32
+pcib33: <ACPI PCI-PCI bridge> at device 24.6 on pci0
+pci33: <ACPI PCI bus> on pcib33
+pcib34: <ACPI PCI-PCI bridge> at device 24.7 on pci0
+pci34: <ACPI PCI bus> on pcib34
+acpi_acad0: <AC Adapter> on acpi0
+uart0: <16550 or compatible> port 0x3f8-0x3ff irq 4 flags 0x10 on acpi0
+uart0: console (9600,n,8,1)
+uart1: <16550 or compatible> port 0x2f8-0x2ff irq 3 on acpi0
+pmtimer0 on isa0
+orm0: <ISA Option ROMs> at iomem 0xc0000-0xc7fff,0xc8000-0xc8fff,0xc9000-0xcafff,0xdc000-0xdffff,0xe0000-0xe7fff pnpid ORM0000 on isa0
+acpi_throttle0: <ACPI CPU Throttling> on cpu0
+Timecounters tick every 10.000 msec
+em0: link state changed to UP
+ipfw2 (+ipv6) initialized, divert loadable, nat enabled, default to accept, logging disabled
+random: unblocking device.
+md0.uncompress: GEOM_ULZMA image found
+md0.uncompress: 2048 x 16384 blocks
+ada0 at ahcich1 bus 0 scbus1 target 0 lun 0
+ada0: <VMware Virtual SATA Hard Drive 00000001> ATA-6 SATA 2.x device
+ada0: Serial Number 01000000000000000001
+ada0: 600.000MB/s transfers (SATA 3.x, UDMA5, PIO 8192bytes)
+ada0: Command Queueing enabled
+ada0: 64MB (131072 512 byte sectors: 16H 63S/T 130C)
+ada0: Previously was known as ad0
+Timecounter "TSC-low" frequency 1197287500 Hz quality 1000
+Trying to mount root from ufs:/dev/md0 []...
+Mounting from ufs:/dev/md0 failed with error 22.
+Trying to mount root from ufs:/dev/ufs/rootimg []...
+Setting hostuuid: 564d5168-aefd-8e66-ddbb-34731e81856e.
+Setting hostid: 0xcb5f181b.
+Entropy harvesting: interrupts ethernet point_to_point swi.
+Starting file system checks:
+/dev/ufs/config: FILE SYSTEM CLEAN; SKIPPING CHECKS
+/dev/ufs/config: clean, 1262 free (14 frags, 156 blocks, 0.8% fragmentation)
+/dev/ufs/storage: FILE SYSTEM CLEAN; SKIPPING CHECKS
+/dev/ufs/storage: clean, 2452 free (28 frags, 303 blocks, 0.5% fragmentation)
+Mounting local file systems:.
+Writing entropy file:.
+Setting hostname: tiny-10R.
+eval: /usr/sbin/ip6addrctl: not found
+Starting Network: lo0 em0.
+lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> metric 0 mtu 16384
+        options=600003<RXCSUM,TXCSUM,RXCSUM_IPV6,TXCSUM_IPV6>
+        inet6 ::1 prefixlen 128
+        inet6 fe80::1%lo0 prefixlen 64 scopeid 0x2
+        inet 127.0.0.1 netmask 0xff000000
+        nd6 options=21<PERFORMNUD,AUTO_LINKLOCAL>
+em0: flags=8802<BROADCAST,SIMPLEX,MULTICAST> metric 0 mtu 1500
+        options=9b<RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,VLAN_HWCSUM>
+        ether 00:0c:29:81:85:6e
+        nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
+        media: Ethernet autoselect (1000baseT <full-duplex>)
+        status: active
+/etc/rc: WARNING: run_rc_command: cannot run /sbin/devd
+add net fe80::: gateway ::1
+add net ff02::: gateway ::1
+add net ::ffff:0.0.0.0: gateway ::1
+add net ::0.0.0.0: gateway ::1
+Flushed all rules.
+00100 allow ip from any to any via lo0
+00200 deny ip from any to 127.0.0.0/8
+00300 deny ip from 127.0.0.0/8 to any
+65000 allow ip from any to any
+Firewall rules loaded.
+Creating and/or trimming log files.
+Starting syslogd.
+Packages installation tool. Version 0.1-11052014 (C) Denis V. Meltsaykin 2014
+Installing from [/storage/] to [/proot/] linking to [/packages/]
+md1.uncompress: GEOM_ULZMA image found
+md1.uncompress: 33 x 16384 blocks
+TEST: ext_tools.pack...  MD5 Signature OK. no device. Creating and mounting... MD: md1 Mounted in /proot/a.
+md2.uncompress: GEOM_ULZMA image found
+md2.uncompress: 78 x 16384 blocks
+TEST: basepack_v1.01.pack...  MD5 Signature OK. no device. Creating and mounting... MD: md2 Mounted in /proot/b.
+md3.uncompress: GEOM_ULZMA image found
+md3.uncompress: 495 x 16384 blocks
+TEST: ultra.pack...  MD5 Signature OK. no device. Creating and mounting... MD: md3 Mounted in /proot/c.
+ Creating /packages/lib
+ Creating /packages/sbin
+ Creating /packages/bin
+ Creating /packages/etc
+ Creating /packages/etc/minicom
+ Creating /packages/etc/rc.d
+ELF ldconfig path: /lib /usr/lib /usr/lib/compat /etc/ld-elf.so.conf
+a.out ldconfig path: /usr/lib/aout /usr/lib/compat/aout
+Clearing /tmp (X related).
+eval: utx: not found
+Starting local daemons:.
+Mounting late file systems:DHCPDISCOVER on em0 to 255.255.255.255 port 67 interval 8
+.
+Performing sanity check on sshd configuration.
+Starting sshd.
+Starting cron.
+eval: gpart: not found
+Starting background file system checks in 60 seconds.
+
+Mon May 19 22:00:32 UTC 2014
+
+FreeBSD/i386 (tiny-10R) (ttyu0)
+
+login:

@@ -1,0 +1,122 @@
+Undocumented feature of FreeBSD-kernel
+
+http://docs.freebsd.org/cgi/getmsg.cgi?fetch=120899+0+archive/2010/freebsd-arch/20100829.freebsd-arch
+Summary of round 1:
+1.  A ramdisk root file system (whether pre-loaded by the loader or
+    compiled into the kernel) allows any and all file systems to
+    be mounted as root (in theory). One can populate the ramdisk
+    with whatever tools one needs to setup the storage solution and
+    mount file systems.
+2.  Negative experiences with the ramdisk root file system as a
+    general approach for mounting a root file system have been
+    expressed.
+3.  A well-defined and simple recursive algorithm that the kernel
+    uses for finding (nested) root file systems has not been shot
+    down, but needs to handle the power of GEOM better.
+
+See also:
+http://docs.freebsd.org/cgi/getmsg.cgi?fetch=5942+0+current/freebsd-arch
+
+Round 2 preamble:
+
+Let me mention a problem with the currently implemented root mount
+logic as a reminder that something needs to be fixed, even if we
+don't want to enhance: A USB disk cannot always be used as a root
+file system by virtue of the USB stack releasing the root mount
+lock after creating the umass device, but before CAM has created
+the corresponding da device. The kernel will try mounting from
+/dev/da0 before the device exists, fails and then drops into the
+root mount prompt. Often the story ends here -- with failure.
+
+The root mount enhancement intends to solve this scenario by
+specifically waiting for the mentioned device/path before
+moving on to the next alternative.
+
+Round 2:
+
+The logic remains mostly the same as described in round 1, but
+gains a directive and limited variable substitution. These are
+added to decouple the mount directive (${FS}:${DEV}) from the
+creation of the memory disk so that GEOM can do it's thing. As
+such, the creation of a memory disk is now a separate directive:
+
+    .md <image-file> <md-options>
+
+To mount the memory disk (UFS in the example), use:
+
+    ufs:/dev/md# <mount-options>
+
+Here md# refers to the md unit created by the last .md directive.
+Since the logic is for mounting the root file system only, a .md
+directive implicitly detaches and releases the previously created
+md device before creating a new one. In other words: the
+enhancement is not for creating a bunch of md devices.
+
+Should this be relaxed so that any number of md device can be
+created before we try a root mount?
+
+When the md device appears, GEOM gets to taste the provider
+and all kinds of interesting things can happen. By decoupling
+the creating of the md device and the mount directive, it's
+trivial to handle arbitrarily complex GEOM graphs. For example:
+
+    ufs:/dev/md#s1a
+    ufs:/dev/md#.uzip
+    ...
+
+For completeness, the syntax of the configuration file (in
+some weird hybrid regex-based specification that is sloppy
+about spaces) to make sure things get fleshed out enough
+for review:
+
+    <.mount.conf>	: (^<config-line>$)*
+    <config-line>	: <comment>
+	    | <empty>
+	    | <directive>
+    <comment>	: '#'.*
+    <empty>		: 
+    <directive>	: <mount>
+	    | <md>
+	    | <ask>
+	    | <wait>
+	    | <onfail>
+	    | <init>
+    <mount>		: <fs>':'<path> <mount-options>
+    <mount-options>	: <empty>
+	    | <mount-opt-list>
+    <mount-opt-list>: <mount-option>
+	    | <mount-option>','<mount-opt-list>
+    <mount-option>	: <var>
+	    | <var>'='<value>
+    <md>		| ".md" <file> <md-options>
+    <md-options>	: <empty>
+	    | <md-opt-list>
+    <md-opt-list>	: <md-option>
+	    | <md-option>','<md-opt-list>
+    <md-option>	: "nocompress"			# compress is default
+	    | "nocluster"			# cluster is default
+	    | "async"
+	    | "readonly"
+    <ask>		: ".ask"
+    <wait>		: "wait" <seconds>
+    <onfail>	: "onfail" <onfail-action>
+    <onfail-action>	: "panic"			# default
+	    | "reboot"
+	    | "retry"
+	    | "continue"
+    <init>		: ".init" <init-list>
+    <init-list>	: <program>
+	    | <program>':'<init-list>
+
+
+To re-iterate: the logic is recursive. After mounting some file system
+as root, the kernel will follow the directives in /.mount.conf (if the
+file exists) for remounting the root file system. At each iteration the
+kernel will remount devfs under /dev and remount the current root file
+system under /.mount within the new root file system.
+
+Thoughts?
+
+-- 
+Marcel Moolenaar
+xcllnt@mac.com
