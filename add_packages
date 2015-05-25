@@ -1,0 +1,149 @@
+#!/bin/sh
+
+# PROVIDE: add_packages
+# REQUIRE: mountcritlocal
+# BEFORE:  ldconfig
+
+
+. /etc/rc.subr
+
+name="add_packages"
+rcvar=add_packages_enable
+start_cmd="${name}_start"
+stop_cmd=":"
+
+MD5=/sbin/md5
+MOUNT=/sbin/mount
+MDC=/sbin/mdconfig
+DD=/bin/dd
+NEWFS=/sbin/newfs
+TAR=/usr/bin/tar
+AWK=/usr/bin/awk
+FIND=/usr/bin/find
+MKDIR=/bin/mkdir
+LN=/bin/ln
+GREP=/usr/bin/grep
+
+MDU=10
+MD=/dev/md$MDU
+
+MINSIZE=8388608 #8Mb min disk size
+
+SDIR=/storage
+DDIR=/packages
+LOCDIR=/etc/local/etc
+PROOT=/proot
+DIRLIST="bin sbin local lib lib32 libexec usr usr/bin usr/lib usr/sbin"
+
+
+check_mount_point () {
+    
+    if [ ! -d $DDIR ]; then echo "ERROR: No $DDIR directory available. You must create it!"; return 1; fi
+    
+    $MOUNT -t tmpfs -osize=128k tmpfs $DDIR
+    if [ ! $? -eq 0 ]; then echo "ERROR: Can't mount $DDIR!"; return 1; fi
+    
+    
+    echo -n "Populating $DDIR: "
+    for list in $DIRLIST
+    do
+	echo -n "[$list]"	
+	$MKDIR $DDIR/$list
+    done
+    
+    $LN -s $LOCDIR $DDIR/etc
+    
+    echo "[/etc/ links] | Done."
+    return 0
+    
+	    
+}
+
+
+check_md5 () {
+    
+    PKGNAME=$1
+    if [ -f $PKGNAME.md5 ]
+    then
+	echo -n " | Found signature. Testing ..."
+	if [ `$MD5 -q $PKGNAME` == `cat "$PKGNAME.md5"` ]
+	then
+	    echo " PASSED."
+	    retval=0	    
+	else
+	    echo " WRONG SIGNATURE!"
+	    retval=1
+	fi
+    else
+	echo " | No signature found. Skipping checks."
+	retval=0
+    fi
+    
+    return $retval
+}
+
+
+try_mount () {
+    PKGNAME=$1
+    
+    $MDC -lv | $GREP $PKGNAME > /dev/null 2>&1
+    
+    if [ $? -eq 0 ]; then echo -n "Already installed. "; return 1; fi
+    for POINT in `ls $PROOT/`
+    do
+	echo -n "Checking "$PROOT"/"$POINT": "
+	$MOUNT | $GREP $PROOT/$POINT > /dev/null 2>&1
+	if [ $? -eq 1 ];then
+	    echo -n " Available. Trying to mount. "
+	    $MOUNT -t cd9660 /dev/`$MDC -f $PKGNAME 2>/dev/null`.uncompress $PROOT/$POINT 
+	    if [ $? -eq 0 ]; then echo -n "Succes. Populating links..."
+		cd $PROOT/$POINT
+		$FIND * -type file -exec $LN -sf $PROOT/$POINT/{} $DDIR/{} \;
+	        echo "OK."
+                return
+	    else 
+		echo "Fail! Task aborted. "
+	        return 2
+            fi
+	    
+	else
+	    echo -n " N/A. Skip. | "
+	fi
+	
+    done
+
+}
+
+add_packages_start (){
+echo "Activating packages in $SDIR"
+
+check_mount_point
+
+if [ ! $? -eq 0 ]; then echo "Major failure. Abort."; return 2; fi
+
+for PKG in `ls $SDIR/*.pack`
+do
+	echo -n "Found package "$PKG
+	
+	check_md5 $PKG
+	
+	if [ $? -eq 0 ] 
+	then 
+	    try_mount $PKG
+	    if [ $? -eq 0 ]
+	    then
+		echo $PKG" succefully installed."
+	    else
+		echo $PKG" failed to install."
+	    fi
+	else
+	    echo "SKIPPING PACKAGE DUE TO WRONG SIGNATURE!"
+	fi
+	 
+	
+done
+
+}
+
+load_rc_config $name
+run_rc_command "$1"
